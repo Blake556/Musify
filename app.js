@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const http = require('http')
+const https = require('https')
 const request = require('request');
 const { on } = require('events')
 const PORT = 3020
@@ -13,7 +13,7 @@ app.use(express.static('public'))
 //const redirect_uri = 'http://localhost:3020/callback';
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/login.html')
+    res.sendFile(__dirname + '/index.html')
 })
 
 
@@ -40,28 +40,27 @@ app.post('/', function(req, res) {
     if (!error && response.statusCode === 200) {
         var token = body.access_token;
         console.log(token)
-        res.sendFile(__dirname + '/index.html')
+        res.sendFile(__dirname + '/search.html')
     } else {
         res.sendFile(__dirname + '/fail.html')
     }
 
     });
+})
 
 
-    app.post('/fail.html', function(req, res) {
-        res.redirect('/')
+app.post('/fail.html', function(req, res) {
+    res.redirect('/')
 
-    })
+})
 
-    app.post("/index.html", function(req, res) {
+
+   
+app.post("/search.html", function(req, res) {
 
         let searchBar = req.body.search
         console.log(searchBar)
 
-        let accessToken = 'BQBoJwXLw-SlDPw63sm10NQom2iElIpwuGgliAXhihKv6os4akEjVSsOhF_NWBdEfQ7kNTayLETZT1q-PCtuhHERDldB88G3aIP44H3jljrvKEuam9c'
-
-        const url = `/v1/search?q=${searchBar}&type=track%2Cartist&limit=5`
-        
         /*
         The url i camme up with
         `https://api.spotify.com/v1/search?q=${searchBar}?type=artist,album,track&limit=5`
@@ -70,14 +69,16 @@ app.post('/', function(req, res) {
         `http://api.spotify.com/v1/search?q=${searchBar}&type=track%2Cartist&limit=5
         */
 
-       
+        let accessToken = 'BQDeCGs6YKaC35Zp5eXs7MothnUEOu2QAV5-LfZUamWxzT9p_NIypG4dzZkA_lCXNqoeEL6dh89nJ3NIojNcdvUp9hDMxoMnshqtTkerBmj215sPgcY'
+
+        const url = `https://api.spotify.com/v1/search?q=${searchBar}&type=track%2Cartist&limit=5`
+
+        
             const options = {
-                method: 'GET',
-                url: url,
-                headers: {
-                    headerContent: 'application/json',
-                    Authorization: accessToken,
-                    Host: api.spotify.com
+                headerContent: 'application/json',
+                Host: 'api.spotify.com',
+                    headers: {
+                        Authorization: 'bearer ' + accessToken  
                     }
             }
 
@@ -90,7 +91,7 @@ app.post('/', function(req, res) {
             */
 
 
-        http.get(url, options, function(response) {
+        https.get(url, options, function(response) {
             response.on('data', function(data) {
 
                 console.log(JSON.parse(data))
@@ -105,9 +106,7 @@ app.post('/', function(req, res) {
 
 
 
-    })
 })
-
 
 
 
