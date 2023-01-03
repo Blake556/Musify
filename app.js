@@ -22,7 +22,6 @@ app.get("/", function(req, res) {
 app.post("/", function(req, res) {
 
     var client_id = '34e6ede8cf47496a986e85377dfb3939';
-   
     var client_secret = 'da1b1df8a34f41e1a19aff6d2772e3f6';
 
     var authOptions = {
@@ -40,7 +39,7 @@ app.post("/", function(req, res) {
     request.post(authOptions, function(error, response, body) {
         if (!error && response.statusCode === 200) {
             var token = body.access_token;
-            console.log(body)
+            //console.log(body)
             res.sendFile(__dirname + '/index.html')
         } else {
             res.sendFile(__dirname + '/fail.html')
@@ -49,16 +48,16 @@ app.post("/", function(req, res) {
 
 
 
-        let searchBar = 'drake' //req.body.search
-        console.log(searchBar)
+        let searchBar = 'pink floyd' //req.body.search
+        //console.log(searchBar)
 
-        // let accessToken = 'BQBa4JxlUXlAGDghrUbTB8qtuXK1w0eSriJp6-Gu9_6DtTquzHWO6AdB30XOh5etwlR8J3HaKQQc7zf7RIMZBrJVIIUI72Lh6k4FNE8sLe-GcqazwuQ'
-
-        // const url = `https://api.spotify.com/v1/search?q=${searchBar}&type=track%2Cartist&limit=5`
-
+        
+        const url = `https://api.spotify.com/v1/search?type=track&limit=5&q=${searchBar}`
+        //`https://api.spotify.com/v1/search?q=${searchBar}&type=artist&limit=1`
+     
             
         var options = {
-            url: `https://api.spotify.com/v1/search?q=${searchBar}&type=artist,track,album&limit=5`,
+            url: url,
             Host: 'api.spotify.com',
             headers: { 'Authorization': 'Bearer ' + token },
             json: true
@@ -67,7 +66,17 @@ app.post("/", function(req, res) {
 
 
         request.get(options, function(error, response, body) {
-            console.log(body.artists.items[0].href)
+
+            let track = body.tracks.items
+            track.map(tracks => {
+                console.log(tracks.name)
+            })
+
+            console.log(body.tracks.items[0].name)   //body.artists.items
+
+           
+
+
             //response.on('data', function(data) {
                 //console.log(JSON.parse(data))
                 // console.log(dataReceived)
@@ -77,19 +86,9 @@ app.post("/", function(req, res) {
                 //     console.log('Error')
                 // }
             
-        //})
+            //})
+        });
     });
-});
-
-
-
-// LEFT OFF UP ABOVE FIGURED OUT GETTING ACCESS TOKEN FOR EVERY SEARCH MADE USING TOKEN TO ACCESS SPOTIFY API AND TO SEARCH SPOTFIFY 
-
-// RESTRUCTURED HTML FILES/NAMES TO GO DIRECTLY TO SEARCH PAGE CHANGED EXPRESS ROUTES BEFORE STARTING SAVE COMMIT TO GIT
-
-// NOW ITS TIME TO FIGURE OUT SPECIFICALLY WHAT INFO TO EXTRACT FROM THE API RESPONSE AND POST IT IN MY WEB APP
-    
-
 
 })
 
@@ -98,6 +97,25 @@ app.post('/fail.html', function(req, res) {
     res.redirect('/')
 
 })
+
+
+
+app.listen(PORT, function() {
+    console.log('server is live')
+})
+
+
+
+
+// inside request.post - const url = `https://api.spotify.com/v1/search?q=${searchBar}&type=track%2Cartist&limit=5`
+
+// LEFT OFF UP ABOVE FIGURED OUT GETTING ACCESS TOKEN FOR EVERY SEARCH MADE USING TOKEN TO ACCESS SPOTIFY API AND TO SEARCH SPOTFIFY 
+
+// RESTRUCTURED HTML FILES/NAMES TO GO DIRECTLY TO SEARCH PAGE CHANGED EXPRESS ROUTES BEFORE STARTING SAVE COMMIT TO GIT
+
+// NOW ITS TIME TO FIGURE OUT SPECIFICALLY WHAT INFO TO EXTRACT FROM THE API RESPONSE AND POST IT IN MY WEB APP
+
+
 
 
 
@@ -110,6 +128,8 @@ const options = {
         }
 }
 */
+
+
 //app.post("/search.html", function(req, res) {
 
        
@@ -144,14 +164,4 @@ const options = {
 //                 // }
 //             })
 //         })
-
-
-
 // })
-
-
-
-
-app.listen(PORT, function() {
-    console.log('server is live')
-})
