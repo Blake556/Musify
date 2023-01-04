@@ -12,12 +12,12 @@
 </head>
 <body>
 
-        <h1>Search musify</h1>
+        <h1 class='header'>Search musify</h1>
 
         <form action="/" method="post">
             <div class="input-group mb-3 search-bar">
                 <button class="btn btn-success" type="submit" id="search" >Search</button>
-                <input type="text" class="form-control" placeholder="Search Artist, Album or Song" aria-label="Example text with button addon" aria-describedby="button-addon1" name="search">
+                <input type="text" class="form-control" placeholder="Search Artist, Album or Song" aria-label="Example text with button addon" aria-describedby="button-addon1" name="search" required>
             </div>
         </form>
         
@@ -25,7 +25,7 @@
 
         <div class='results-container'>
             <div class='results'>
-                <p>Song 1</p>
+                <p class='track'>Song 1</p>
                 <span class='artist'>Artist 1</span> | <span class='album'>Album 1</span>
             </div>
 

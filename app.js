@@ -2,18 +2,24 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const https = require('https')
 const request = require('request');
-const { on } = require('events')
+const { on } = require('events');
+const { Console } = require('console');
 const PORT = 3020
 const app = express()
 
+app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('public'))
 
 //const clientId = '34e6ede8cf47496a986e85377dfb3939'
 //const redirect_uri = 'http://localhost:3020/callback';
 
+
+const name = 'blake'
+
 app.get("/", function(req, res) {
     res.sendFile(__dirname + '/index.html')
+    
 })
 
 
@@ -46,13 +52,11 @@ app.post("/", function(req, res) {
         }
 
 
+        console.log(req.body)
+        let searchBar = req.body.search
 
-
-        let searchBar = 'pink floyd' //req.body.search
-        //console.log(searchBar)
-
-        
-        const url = `https://api.spotify.com/v1/search?type=track&limit=5&q=${searchBar}`
+       
+        const url = `https://api.spotify.com/v1/search?type=track,artist,album&limit=5&q=${searchBar}`
         //`https://api.spotify.com/v1/search?q=${searchBar}&type=artist&limit=1`
      
             
@@ -67,14 +71,105 @@ app.post("/", function(req, res) {
 
         request.get(options, function(error, response, body) {
 
+            // Below does not exactly match the tracks to the artists maybe even album
+
+            console.log()
+
             let track = body.tracks.items
-            track.map(tracks => {
-                console.log(tracks.name)
+            let tracks = track.map(tracks => {
+                
+                return tracks.name
             })
 
-            console.log(body.tracks.items[0].name)   //body.artists.items
+            
 
-           
+            console.log()
+
+            let artist = body.artists.items
+            let artistList = artist.map(artists => {
+                return artists.name
+            })
+
+            console.log()
+
+            let album = body.albums.items
+            let albumList = album.map(album => {
+                return album.name
+            })
+
+            // let trackElement = document.querySelector('.track')
+            // trackElement.innerText = track
+
+            //res.write(`<p class=track>${trackElement}</p>`)
+            //res.send(track, artist, album)
+
+            
+            
+        });
+        // app.get('/index.html', function(req, res) {
+        //     res.send(body)
+        //     let header = document.querySelector('.header')
+        //     console.log(res.body)
+        //     console.log(tracks)
+        //  })
+
+        
+        console.log()
+
+    });
+
+   
+
+})
+
+
+    app.get('/', function(req, res) {
+        let header = document.querySelector('.header')
+        console.log(header)
+        
+    })
+
+
+
+app.post('/fail.html', function(req, res) {
+    res.redirect('/')
+
+})
+
+app.listen(PORT, function() {
+    console.log('server is live')
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// inside request.post - const url = `https://api.spotify.com/v1/search?q=${searchBar}&type=track%2Cartist&limit=5`
+
+
+
+
+//  below this was in request.get the code that i thougt needed to be in 
+
+
+            //console.log(body.tracks.items[0].name)
+            
 
 
             //response.on('data', function(data) {
@@ -87,27 +182,9 @@ app.post("/", function(req, res) {
                 // }
             
             //})
-        });
-    });
-
-})
-
-
-app.post('/fail.html', function(req, res) {
-    res.redirect('/')
-
-})
 
 
 
-app.listen(PORT, function() {
-    console.log('server is live')
-})
-
-
-
-
-// inside request.post - const url = `https://api.spotify.com/v1/search?q=${searchBar}&type=track%2Cartist&limit=5`
 
 // LEFT OFF UP ABOVE FIGURED OUT GETTING ACCESS TOKEN FOR EVERY SEARCH MADE USING TOKEN TO ACCESS SPOTIFY API AND TO SEARCH SPOTFIFY 
 
