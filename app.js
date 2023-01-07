@@ -50,7 +50,7 @@ app.post("/", function(req, res) {
            
         let searchBar = req.body.search
         
-        const url = `https://api.spotify.com/v1/search?type=track,artist,album&limit=5&q=${searchBar}`
+        const url = `https://api.spotify.com/v1/search?type=track,artist,album&limit=10&q=${searchBar}`
           
         var options = {
             url: url,
@@ -69,19 +69,34 @@ app.post("/", function(req, res) {
                     song2: body.tracks.items[1].name,
                     song3: body.tracks.items[2].name,
                     song4: body.tracks.items[3].name,
-                    song5: body.tracks.items[4].name, 
+                    song5: body.tracks.items[4].name,
+                    song6: body.tracks.items[5].name,
+                    song7: body.tracks.items[6].name,
+                    song8: body.tracks.items[7].name,
+                    song9: body.tracks.items[8].name,
+                    song10: body.tracks.items[9].name,  
                     
                     artist1: body.artists.items[0].name,
-                    artist2: body.artists.items[1].name,
-                    artist3: body.artists.items[2].name,
-                    artist4: body.artists.items[3].name,
-                    artist5: body.artists.items[4].name,
+                    artist2: body.artists.items[0].name,
+                    artist3: body.artists.items[0].name,
+                    artist4: body.artists.items[0].name,
+                    artist5: body.artists.items[0].name,
+                    artist6: body.artists.items[0].name,
+                    artist7: body.artists.items[0].name,
+                    artist8: body.artists.items[0].name,
+                    artist9: body.artists.items[0].name,
+                    artist10: body.artists.items[0].name,
 
                     album1: body.albums.items[0].name,
                     album2: body.albums.items[1].name,
                     album3: body.albums.items[2].name,
                     album4: body.albums.items[3].name,
                     album5: body.albums.items[4].name,
+                    album6: body.albums.items[5].name,
+                    album7: body.albums.items[6].name,
+                    album8: body.albums.items[7].name,
+                    album9: body.albums.items[8].name,
+                    album10: body.albums.items[9].name
             })
 
         });

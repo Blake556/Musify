@@ -16,6 +16,10 @@ h1 {
    height: 40px;
 }
 
+.results-container {
+   margin-bottom: 40px;
+}
+
 .result-title {
    margin: 30px 0 20px 0;
 }
