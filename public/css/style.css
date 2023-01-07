@@ -11,7 +11,7 @@ h1 {
 
 .search-bar {
    margin: 0 auto;
-   width: 22%;
+   width: 18%;
    min-width: 200px;
    height: 40px;
 }
@@ -26,7 +26,7 @@ h1 {
    padding:10px;
    padding-bottom: 20px;
    margin: auto;
-   width: 400px;
+   width: 325px;
    border-bottom: 1px solid rgb(201, 201, 201);
 }
 
