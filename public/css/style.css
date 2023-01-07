@@ -8,14 +8,18 @@ body {
 h1 {
    margin-bottom: 20px;
 }
+
+
+
 .search-bar {
    margin: 0 auto;
-   width: 25%;
+   width: 22%;
+   min-width: 200px;
    height: 40px;
 }
 
 .result-title {
-   margin: 15px 0;
+   margin: 30px 0 20px 0;
 }
 
 .results {
@@ -24,15 +28,19 @@ h1 {
    padding:10px;
    padding-bottom: 20px;
    margin: auto;
-   width: 350px;
-  
+   width: 400px;
    border-bottom: 1px solid rgb(201, 201, 201);
 }
 
 p {
+   font-size: 17px;
    font-weight: bold;
    position: relative;
    top: 7px;
+}
+
+span {
+   font-size: 15px;
 }
 
 .artist {
@@ -45,4 +53,9 @@ p {
 
 .bottom-result {
    border-bottom: none;
+}
+
+
+@media screen and ( max-width: 480px ) {
+
 }

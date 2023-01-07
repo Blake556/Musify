@@ -4,12 +4,14 @@ const https = require('https')
 const request = require('request');
 const { on } = require('events');
 const { Console } = require('console');
+const favicon = require('serve-favicon');
 const PORT = 3020
 const app = express()
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('public'))
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 //const clientId = '34e6ede8cf47496a986e85377dfb3939'
 //const redirect_uri = 'http://localhost:3020/callback';
@@ -70,36 +72,68 @@ app.post("/", function(req, res) {
 
             // Below does not exactly match the tracks to the artists maybe even album
 
-            console.log()
+           
+            let track1 = body.tracks.items[0].name
+            let track2 = body.tracks.items[1].name
+            let track3 = body.tracks.items[2].name
+            let track4 = body.tracks.items[3].name
+            let track5 = body.tracks.items[4].name
 
-            let track = body.tracks.items[0].name
-            let artist = body.artists.items[0].name
-            let album = body.albums.items[0].name
-            console.log(track)
-
-            res.render('index', { text: track, song: artist, ball: album})
-
+            // let track = body.tracks.items
             // let tracks = track.map(tracks => {
-                
             //     return tracks.name
             // })
-
+            // console.log(tracks)
             
 
-            console.log()
+            let artist1 = body.artists.items[0].name
+            let artist2 = body.artists.items[1].name
+            let artist3 = body.artists.items[2].name
+            let artist4 = body.artists.items[3].name
+            let artist5 = body.artists.items[4].name
 
-            //////let artist = body.artists.items[0].name
-            
+            // let artist = body.artists.items
             // let artistList = artist.map(artists => {
             //     return artists.name
             // })
+            // console.log(artistList)
+           
 
-            console.log()
 
-            //let album = body.albums.items
+            let album1 = body.albums.items[0].name
+            let album2 = body.albums.items[1].name
+            let album3 = body.albums.items[2].name
+            let album4 = body.albums.items[3].name
+            let album5 = body.albums.items[4].name
+
+            // let album = body.albums.items
             // let albumList = album.map(album => {
             //     return album.name
             // })
+            // console.log(albumList)
+            
+
+
+            res.render('index', 
+                {   
+                    song1: track1, 
+                    song2: track2, 
+                    song3: track3, 
+                    song4: track4, 
+                    song5: track5, 
+                    
+                    artist1: artist1,
+                    artist2: artist2,
+                    artist3: artist3,
+                    artist4: artist4,
+                    artist5: artist5,
+
+                    album1: album1,
+                    album2: album2,
+                    album3: album3,
+                    album4: album4,
+                    album5: album5,
+                })
 
             // let trackElement = document.querySelector('.track')
             // trackElement.innerText = track
@@ -152,7 +186,7 @@ app.listen(PORT, function() {
 
 
 
-
+// Working on favicon finished api server before starting check repository might want to commit before change if commit clean code up ( delete)
 
 
 
