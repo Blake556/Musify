@@ -7,7 +7,7 @@ const request = require('request');
 const { on } = require('events');
 const { Console } = require('console');
 const favicon = require('serve-favicon');
-const PORT = 3020
+const PORT = process.env.PORT || 3020
 const app = express()
 
 
