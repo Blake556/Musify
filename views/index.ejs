@@ -14,13 +14,14 @@
 
 </head>
 <body>
+    <div id="background">
 
         <h1 class='header'>Search Musify</h1>
 
         <form action="/" method="post">
             <div class="input-group mb-3 search-bar">
-                <button class="btn btn-success" type="submit" id="search" >Search</button>
-                <input type="text" class="form-control search-bar" placeholder="Search Artist" aria-label="Example text with button addon" aria-describedby="button-addon1" name="search" required>
+                <button class="btn btn-primary" type="submit" id="search" >Search</button>
+                <input type="text" class="form-control search-bar" placeholder="Search song, artist, album" aria-label="Example text with button addon" aria-describedby="button-addon1" name="search" required>
             </div>
         </form>
         
@@ -29,60 +30,21 @@
 
         <div class='results-container'>
 
-            <h3 class='result-title'>Results</h3>
-
-            <div class='results'>
-                <p> <%= locals.song1 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album' ><%= locals.album1 || 'album' %></span>
-            </div>
-
-            <div class='results'>
-                <p> <%= locals.song2 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album' ><%= locals.album2 || 'album' %></span>
-            </div>
-
-            <div class='results'>
-                <p> <%= locals.song3 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album' ><%= locals.album3 || 'album' %></span>
-            </div>
-
-            <div class='results'>
-                <p> <%= locals.song4 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album' ><%= locals.album4 || 'album' %></span>
-            </div>
-
-            <div class='results'>
-                <p> <%= locals.song5 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album'><%= locals.album5 || 'album' %></span>
-            </div>
-
-            <div class='results'>
-                <p> <%= locals.song6 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album' ><%= locals.album6 || 'album' %></span>
-            </div>
-
-            <div class='results'>
-                <p> <%= locals.song7 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album' ><%= locals.album7 || 'album' %></span>
-            </div>
-
-            <div class='results'>
-                <p> <%= locals.song8 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album' ><%= locals.album8 || 'album' %></span>
-            </div>
-
-            <div class='results'>
-                <p> <%= locals.song9 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album' ><%= locals.album9 || 'album' %></span>
-            </div>
-
-            <div class='results bottom-result'>
-                <p> <%= locals.song10 || 'song' %> </p>
-                <span class='artist' ><%= locals.artist1 || 'artist' %></span> | <span class='album'><%= locals.album10 || 'album' %></span>
-            </div>
+            
+            <!-- inside if statement allows a default Msg -->
+            <% if (data && data.songsListed && data.songsListed.length > 0) { %>
+                <h3 class='result-title'>Results</h3>
+                <% for (let i = 0; i < data.songsListed.length; i++) { %>
+                <div class='results'>
+                    <p> <%= data.songsListed[i] || 'song' %> </p>
+                    <span class='artist' ><%= data.artistsListed[i] || 'artist' %></span> | <span class='album' ><%= data.albumsListed[i] || 'album' %></span>
+                </div>
+                <% } %>
+            <% } %>
+           
         </div>
 
     </div>
-    
+</div>
 </body>
 </html>
