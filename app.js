@@ -23,7 +23,9 @@ app.use(favicon(__dirname + '/public/images/favicon.ico'));
 // Routes
 
 app.get('/', function(req, res) {
-    res.render('index')
+
+    //Added { data: {} } below. so if data is not defined due to search not made yet. Allows a default Msg in ejs
+    res.render('index',  { data: {} })
 })
 
 
@@ -43,7 +45,7 @@ app.post("/", function(req, res) {
     json: true
     };
 
-
+    
     request.post(authOptions, function(error, response, body) {
         
         if (!error && response.statusCode === 200) {
@@ -51,7 +53,7 @@ app.post("/", function(req, res) {
            
         let searchBar = req.body.search
         
-        const url = `https://api.spotify.com/v1/search?type=track,artist,album&limit=10&q=${searchBar}`
+        const url = `https://api.spotify.com/v1/search?type=track,artist,album&limit=15&q=${searchBar}`
           
         var options = {
             url: url,
@@ -64,41 +66,75 @@ app.post("/", function(req, res) {
 
             // Below does not exactly match the tracks to the artists maybe even album
 
-            res.render('index', 
-                {   
-                    song1: body.tracks.items[0].name,
-                    song2: body.tracks.items[1].name,
-                    song3: body.tracks.items[2].name,
-                    song4: body.tracks.items[3].name,
-                    song5: body.tracks.items[4].name,
-                    song6: body.tracks.items[5].name,
-                    song7: body.tracks.items[6].name,
-                    song8: body.tracks.items[7].name,
-                    song9: body.tracks.items[8].name,
-                    song10: body.tracks.items[9].name,  
-                    
-                    artist1: body.artists.items[0].name,
-                    artist2: body.artists.items[0].name,
-                    artist3: body.artists.items[0].name,
-                    artist4: body.artists.items[0].name,
-                    artist5: body.artists.items[0].name,
-                    artist6: body.artists.items[0].name,
-                    artist7: body.artists.items[0].name,
-                    artist8: body.artists.items[0].name,
-                    artist9: body.artists.items[0].name,
-                    artist10: body.artists.items[0].name,
+            // const songsListed = []
+            // const albumListed = []
+            // const artistListed = []
 
-                    album1: body.albums.items[0].name,
-                    album2: body.albums.items[1].name,
-                    album3: body.albums.items[2].name,
-                    album4: body.albums.items[3].name,
-                    album5: body.albums.items[4].name,
-                    album6: body.albums.items[5].name,
-                    album7: body.albums.items[6].name,
-                    album8: body.albums.items[7].name,
-                    album9: body.albums.items[8].name,
-                    album10: body.albums.items[9].name
-            })
+            // for(let i = 0; i < body.length; i++) {
+            //     songsListed.push(body.tracks.items[i].name)
+            //     albumListed.push(body[i].artists.items.name)
+            //     artistListed.push(body[i].album.items.name)
+            // }
+
+            // console.log(songsListed.length, albumListed, artistListed)
+
+
+            const tracks = body.tracks.items || []
+            const artists = body.artists.items || []
+            const albums = body.albums.items || []
+
+            const data = {
+                songsListed: [],
+                artistsListed: [],
+                albumsListed: []
+            }
+
+            for(let i = 0; i < tracks.length; i++) {
+                data.songsListed.push(tracks[i].name)
+                data.artistsListed.push(artists[i].name)
+                data.albumsListed.push(albums[i].name)
+            }
+
+
+            console.log(data)
+
+            res.render('index', { data: data }
+            //     {   
+            //         song1: body.tracks.items[0].name,
+            //         song2: body.tracks.items[1].name,
+            //         song3: body.tracks.items[2].name,
+            //         song4: body.tracks.items[3].name,
+            //         song5: body.tracks.items[4].name,
+            //         song6: body.tracks.items[5].name,
+            //         song7: body.tracks.items[6].name,
+            //         song8: body.tracks.items[7].name,
+            //         song9: body.tracks.items[8].name,
+            //         song10: body.tracks.items[9].name,  
+                    
+            //         artist1: body.artists.items[0].name,
+            //         artist2: body.artists.items[0].name,
+            //         artist3: body.artists.items[0].name,
+            //         artist4: body.artists.items[0].name,
+            //         artist5: body.artists.items[0].name,
+            //         artist6: body.artists.items[0].name,
+            //         artist7: body.artists.items[0].name,
+            //         artist8: body.artists.items[0].name,
+            //         artist9: body.artists.items[0].name,
+            //         artist10: body.artists.items[0].name,
+
+            //         album1: body.albums.items[0].name,
+            //         album2: body.albums.items[1].name,
+            //         album3: body.albums.items[2].name,
+            //         album4: body.albums.items[3].name,
+            //         album5: body.albums.items[4].name,
+            //         album6: body.albums.items[5].name,
+            //         album7: body.albums.items[6].name,
+            //         album8: body.albums.items[7].name,
+            //         album9: body.albums.items[8].name,
+            //         album10: body.albums.items[9].name
+            // }
+            )
+            
 
         });
 
@@ -118,3 +154,14 @@ app.post('/fail.html', function(req, res) {
 app.listen(PORT, function() {
     console.log('server is live')
 })
+
+
+
+   // practice grabbing data from spotify
+            
+    // let track = body.tracks.items
+    // for(let i = 0; i < track.length; i++) {
+    //     console.log(track[i].name)
+    // } 
+             
+         
