@@ -15,8 +15,14 @@ app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 // Routes
 app.get('/', function(req, res) {
-    // Display the search form with default data
-    res.render('index', { data: {} });
+    // Check if there is any data available
+    if (!req.data || Object.keys(req.data).length === 0) {
+        // No data available, render the "index" template with default data
+        res.render('index', { data: {} });
+    } else {
+        // Data available, render the "index" template with the retrieved data
+        res.render('index', { data: req.data });
+    }
 });
 
 app.post("/", function(req, res) {
